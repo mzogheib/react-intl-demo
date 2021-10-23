@@ -8,8 +8,13 @@ export enum Locale {
   jp = 'jp',
 }
 
+const messagesWithEnFallback = (localizedMessages: Record<string, string>) => ({
+  ...enMessasges,
+  ...localizedMessages,
+});
+
 export const messages = {
   [Locale.en]: enMessasges,
-  [Locale.de]: deMessasges,
-  [Locale.jp]: jpMessasges,
+  [Locale.de]: messagesWithEnFallback(deMessasges),
+  [Locale.jp]: messagesWithEnFallback(jpMessasges),
 };
