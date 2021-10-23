@@ -1,25 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
+import { FormattedDate, FormattedNumber, IntlProvider } from 'react-intl';
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <IntlProvider messages={{}} locale="en" defaultLocale="en">
+      <div className="App">
+        <div>
+          Today's date is <FormattedDate value={Date.now()} />
+        </div>
+        <div>
+          This is a formatted number <FormattedNumber value={2000.45} />
+        </div>
+      </div>
+    </IntlProvider>
   );
 }
 
