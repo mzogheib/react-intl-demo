@@ -2,41 +2,47 @@ import React from 'react';
 import {
   FormattedDate,
   FormattedNumber,
-  FormattedPlural,
+  FormattedMessage,
   useIntl,
 } from 'react-intl';
 
 import './App.css';
 
 function App() {
-  const { formatDate, formatNumber, formatPlural } = useIntl();
+  const { formatDate, formatNumber, formatMessage } = useIntl();
 
   return (
     <div className="App">
       <div>
         <h1>Components</h1>
         <div>
-          Today's date is <FormattedDate value={Date.now()} />
+          <FormattedMessage id="date" /> <FormattedDate value={Date.now()} />
         </div>
         <div>
-          This is a formatted number <FormattedNumber value={10000.45} />
+          <FormattedMessage id="number" /> <FormattedNumber value={10000.45} />
         </div>
         <div>
-          This is a formatted currency{' '}
-          <FormattedNumber value={2000.32} style={`currency`} currency="USD" />
+          <FormattedMessage id="currency" />{' '}
+          <FormattedNumber value={2000.32} style={`currency`} currency="JPY" />
         </div>
         <div>
-          <FormattedPlural value={5} one="5 dog" other="5 dogs" />
+          <FormattedMessage id="animal" /> <FormattedMessage id="dog" />
         </div>
 
         <h1>useIntl hook</h1>
-        <div>Today's date is {formatDate(Date.now())}</div>
-        <div>This is a formatted number {formatNumber(10000.45)}</div>
         <div>
-          This is a formatted currency{' '}
-          {formatNumber(2000.32, { style: 'currency', currency: 'USD' })}
+          {formatMessage({ id: 'date' })} {formatDate(Date.now())}
         </div>
-        <div>{formatPlural(2, { type: 'cardinal' })}</div>
+        <div>
+          {formatMessage({ id: 'number' })} {formatNumber(10000.45)}
+        </div>
+        <div>
+          {formatMessage({ id: 'currency' })}{' '}
+          {formatNumber(2000.32, { style: 'currency', currency: 'JPY' })}
+        </div>
+        <div>
+          {formatMessage({ id: 'animal' })} {formatMessage({ id: 'dog' })}
+        </div>
       </div>
     </div>
   );
