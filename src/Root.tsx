@@ -11,17 +11,21 @@ enum Locale {
 
 const messages = {
   [Locale.en]: {
-    date: 'date',
-    number: 'number',
-    currency: 'currency',
     animal: 'animal',
+    currency: 'currency',
+    date: 'date',
     dog: 'dog',
+    number: 'number',
   },
   [Locale.de]: {
     dog: 'Hund',
   },
   [Locale.jp]: {
+    animal: '動物',
+    currency: '通貨',
+    date: '日にち',
     dog: '犬',
+    number: '番号',
   },
 };
 
