@@ -1,11 +1,11 @@
 import enMessasges from './messages/en.json';
 import deMessasges from './messages/de.json';
-import jpMessasges from './messages/jp.json';
+import jaMessasges from './messages/ja.json';
 
 export enum Locale {
   en = 'en',
   de = 'de',
-  jp = 'jp',
+  ja = 'ja',
 }
 
 const messagesWithEnFallback = (localizedMessages: Record<string, string>) => ({
@@ -16,5 +16,5 @@ const messagesWithEnFallback = (localizedMessages: Record<string, string>) => ({
 export const messages = {
   [Locale.en]: enMessasges,
   [Locale.de]: messagesWithEnFallback(deMessasges),
-  [Locale.jp]: messagesWithEnFallback(jpMessasges),
+  [Locale.ja]: messagesWithEnFallback(jaMessasges),
 };

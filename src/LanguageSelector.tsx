@@ -5,7 +5,7 @@ import { Locale } from './i18n';
 const langauges = [
   { locale: Locale.en, label: 'English ' },
   { locale: Locale.de, label: 'Deutsche ' },
-  { locale: Locale.jp, label: '日本語 ' },
+  { locale: Locale.ja, label: '日本語 ' },
 ];
 
 type Props = {
