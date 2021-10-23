@@ -6,8 +6,6 @@ import {
   useIntl,
 } from 'react-intl';
 
-import './App.css';
-
 function App() {
   const { formatDate, formatNumber, formatMessage } = useIntl();
 
