@@ -1,5 +1,10 @@
 import React from 'react';
-import { FormattedDate, FormattedNumber, IntlProvider } from 'react-intl';
+import {
+  FormattedDate,
+  FormattedNumber,
+  FormattedPlural,
+  IntlProvider,
+} from 'react-intl';
 
 import './App.css';
 
@@ -13,6 +18,7 @@ function App() {
         <div>
           This is a formatted number <FormattedNumber value={2000.45} />
         </div>
+        <FormattedPlural value={5} one="5 dog" other="5 dogs" />
       </div>
     </IntlProvider>
   );
