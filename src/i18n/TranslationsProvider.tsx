@@ -18,11 +18,17 @@ const TranslationsProvider = ({ children }: Props) => {
   const [messages, setMessages] = useState<Record<string, string> | undefined>(
     undefined
   );
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const getTranslations = async () => {
-      const messagesForLocale = await fetchTranslations(locale);
-      setMessages(messagesForLocale);
+      try {
+        setIsError(false);
+        const messagesForLocale = await fetchTranslations(locale);
+        setMessages(messagesForLocale);
+      } catch {
+        setIsError(true);
+      }
     };
 
     getTranslations();
@@ -31,7 +37,8 @@ const TranslationsProvider = ({ children }: Props) => {
   return (
     <IntlProvider messages={messages} locale={locale} defaultLocale={Locale.en}>
       <LanguageSelector selectedLocale={locale} onSelect={setLocale} />
-      {messages && children}
+      {isError && <div>Error! :(</div>}
+      {messages && !isError && children}
     </IntlProvider>
   );
 };

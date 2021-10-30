@@ -27,7 +27,7 @@ const fetchOptions = {
   }),
 };
 
-export const fetchTranslations = (locale: Locale) => {
+export const fetchTranslations = async (locale: Locale) => {
   // Phrase can sometimes return null results when fallback and locale are the same.
   const fallbackLocaleParams =
     fallbackLocaleId !== locale
@@ -44,5 +44,6 @@ export const fetchTranslations = (locale: Locale) => {
   });
   const url = `${baseUrl}/projects/${projectId}/locales/${locale}/download?${queryParams}`;
 
-  return fetch(url, fetchOptions).then((data) => data.json());
+  const data = await fetch(url, fetchOptions);
+  return data.json();
 };
