@@ -14,32 +14,36 @@ function App() {
       <div>
         <h1>Components</h1>
         <div>
-          <FormattedMessage id="date" /> <FormattedDate value={Date.now()} />
+          <FormattedMessage id="page_general.date" />{' '}
+          <FormattedDate value={Date.now()} />
         </div>
         <div>
-          <FormattedMessage id="number" /> <FormattedNumber value={10000.45} />
+          <FormattedMessage id="ev.Number *" />{' '}
+          <FormattedNumber value={10000.45} />
         </div>
         <div>
-          <FormattedMessage id="currency" />{' '}
+          <FormattedMessage id="general.currency" />{' '}
           <FormattedNumber value={2000.32} style={`currency`} currency="JPY" />
         </div>
         <div>
-          <FormattedMessage id="animal" /> <FormattedMessage id="dog" />
+          <FormattedMessage id="login.heading" />{' '}
+          <FormattedMessage id="login.register-alt" />
         </div>
 
         <h1>useIntl hook</h1>
         <div>
-          {formatMessage({ id: 'date' })} {formatDate(Date.now())}
+          {formatMessage({ id: 'page_general.date' })} {formatDate(Date.now())}
         </div>
         <div>
-          {formatMessage({ id: 'number' })} {formatNumber(10000.45)}
+          {formatMessage({ id: 'ev.Number *' })} {formatNumber(10000.45)}
         </div>
         <div>
-          {formatMessage({ id: 'currency' })}{' '}
+          {formatMessage({ id: 'general.currency' })}{' '}
           {formatNumber(2000.32, { style: 'currency', currency: 'JPY' })}
         </div>
         <div>
-          {formatMessage({ id: 'animal' })} {formatMessage({ id: 'dog' })}
+          {formatMessage({ id: 'login.heading' })}{' '}
+          {formatMessage({ id: 'login.register-alt' })}
         </div>
       </div>
     </div>

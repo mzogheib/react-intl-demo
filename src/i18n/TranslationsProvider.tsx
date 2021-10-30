@@ -31,7 +31,7 @@ const TranslationsProvider = ({ children }: Props) => {
   return (
     <IntlProvider messages={messages} locale={locale} defaultLocale={Locale.en}>
       <LanguageSelector selectedLocale={locale} onSelect={setLocale} />
-      {children}
+      {messages && children}
     </IntlProvider>
   );
 };
