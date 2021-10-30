@@ -19,15 +19,19 @@ const TranslationsProvider = ({ children }: Props) => {
     undefined
   );
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getTranslations = async () => {
       try {
+        setIsLoading(true);
         setIsError(false);
         const messagesForLocale = await fetchTranslations(locale);
         setMessages(messagesForLocale);
       } catch {
         setIsError(true);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -37,6 +41,7 @@ const TranslationsProvider = ({ children }: Props) => {
   return (
     <IntlProvider messages={messages} locale={locale} defaultLocale={Locale.en}>
       <LanguageSelector selectedLocale={locale} onSelect={setLocale} />
+      {isLoading && <div>Loading...</div>}
       {isError && <div>Error! :(</div>}
       {messages && !isError && children}
     </IntlProvider>
