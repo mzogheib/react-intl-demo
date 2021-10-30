@@ -40,7 +40,11 @@ const TranslationsProvider = ({ children }: Props) => {
 
   return (
     <IntlProvider messages={messages} locale={locale} defaultLocale={Locale.en}>
-      <LanguageSelector selectedLocale={locale} onSelect={setLocale} />
+      <LanguageSelector
+        selectedLocale={locale}
+        onSelect={setLocale}
+        disabled={isLoading}
+      />
       {isLoading && <div>Loading...</div>}
       {isError && <div>Error! :(</div>}
       {messages && !isError && children}
