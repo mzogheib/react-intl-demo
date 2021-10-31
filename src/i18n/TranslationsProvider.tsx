@@ -5,9 +5,13 @@ import { Locale } from '.';
 import { fetchTranslations } from './translationsService';
 import LanguageSelector from '../LanguageSelector';
 
-// fetch the translations based on the locale
-// display a placeholder while loading
-// store the fetched messages in state for future changes
+type Messages = Record<string, string>;
+type Translations = Record<Locale, Messages | undefined>;
+
+const initialTranslations = {
+  [Locale.en]: undefined,
+  [Locale.de]: undefined,
+};
 
 type Props = {
   children: ReactNode;
@@ -15,20 +19,28 @@ type Props = {
 
 const TranslationsProvider = ({ children }: Props) => {
   const [locale, setLocale] = useState(Locale.en);
-  const [messages, setMessages] = useState<Record<string, string> | undefined>(
-    undefined
-  );
+  const [translations, setTranslations] =
+    useState<Translations>(initialTranslations);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const messages = translations[locale];
+
   useEffect(() => {
+    if (messages || isLoading || isError) {
+      return;
+    }
+
     const getTranslations = async () => {
+      setIsLoading(true);
+      setIsError(false);
       try {
-        setIsLoading(true);
-        setIsError(false);
-        const messagesForLocale = await fetchTranslations(locale);
-        setMessages(messagesForLocale);
-      } catch {
+        const translationsForLocale = await fetchTranslations(locale);
+        setTranslations({
+          ...translations,
+          [locale]: translationsForLocale,
+        });
+      } catch (error) {
         setIsError(true);
       } finally {
         setIsLoading(false);
@@ -36,19 +48,34 @@ const TranslationsProvider = ({ children }: Props) => {
     };
 
     getTranslations();
-  }, [locale]);
+  }, [isError, isLoading, locale, messages, translations]);
+
+  const handleSelectLocale = (locale: Locale) => {
+    setIsError(false);
+    setLocale(locale);
+  };
 
   return (
-    <IntlProvider messages={messages} locale={locale} defaultLocale={Locale.en}>
-      <LanguageSelector
-        selectedLocale={locale}
-        onSelect={setLocale}
-        disabled={isLoading}
-      />
+    <>
+      <div>
+        <LanguageSelector
+          selectedLocale={locale}
+          onSelect={handleSelectLocale}
+          disabled={isLoading}
+        />
+      </div>
       {isLoading && <div>Loading...</div>}
       {isError && <div>Error! :(</div>}
-      {messages && !isError && children}
-    </IntlProvider>
+      {!isLoading && messages && (
+        <IntlProvider
+          messages={messages}
+          locale={locale}
+          defaultLocale={Locale.en}
+        >
+          {children}
+        </IntlProvider>
+      )}
+    </>
   );
 };
 

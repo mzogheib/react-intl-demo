@@ -39,11 +39,16 @@ export const fetchTranslations = async (locale: Locale) => {
 
   const queryParams = makeQueryParams({
     file_format: 'react_simple_json',
-    // branch
+    branch: 'staging',
     ...fallbackLocaleParams,
   });
   const url = `${baseUrl}/projects/${projectId}/locales/${locale}/download?${queryParams}`;
 
   const data = await fetch(url, fetchOptions);
-  return data.json();
+
+  if (data.ok) {
+    return data.json();
+  } else {
+    throw data.json();
+  }
 };
