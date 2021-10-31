@@ -6,21 +6,6 @@ const fallbackLocaleId = Locale.en;
 const projectId = process.env.REACT_APP_PHRASE_PROJECT_ID;
 const accessToken = process.env.REACT_APP_PHRASE_ACCESS_TOKEN;
 
-type MakeQueryParams = {
-  [key: string]: string | boolean | number | undefined | null;
-};
-
-const makeQueryParams = (params: MakeQueryParams) =>
-  Object.keys(params)
-    .filter((key) => params[key] !== undefined && params[key] !== null)
-    .map(
-      (key) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(
-          params[key] as string
-        )}`
-    )
-    .join('&');
-
 const fetchOptions = {
   headers: new Headers({
     Authorization: `Basic ${btoa(`${accessToken}:`)}`,
@@ -32,17 +17,18 @@ export const fetchTranslations = async (locale: Locale) => {
   const fallbackLocaleParams =
     fallbackLocaleId !== locale
       ? {
-          include_empty_translations: true,
+          include_empty_translations: 'true',
           fallback_locale_id: fallbackLocaleId,
         }
-      : {};
+      : undefined;
 
-  const queryParams = makeQueryParams({
+  const queryParams = new URLSearchParams({
     file_format: 'react_simple_json',
     branch: 'staging',
     ...fallbackLocaleParams,
   });
-  const url = `${baseUrl}/projects/${projectId}/locales/${locale}/download?${queryParams}`;
+  const searchString = `?${queryParams.toString()}`;
+  const url = `${baseUrl}/projects/${projectId}/locales/${locale}/download${searchString}`;
 
   const data = await fetch(url, fetchOptions);
 
